@@ -70,6 +70,9 @@ export default {
       __SCRIPT_AUTHOR__: JSON.stringify(packageAuthor),
       __SCRIPT_NAME__: JSON.stringify(scriptName),
       __SCRIPT_SHORT_NAME__: JSON.stringify(shortScriptName),
+      __SCRIPT_CAMEL_CASE_NAME__: JSON.stringify(
+        convertStringConvention(packagePureName, 'PascalCase'),
+      ),
       __BUILD_TIME__: JSON.stringify(new Date()),
     }),
     addBanner({ file: 'tampermonkey.meta.js' }),
