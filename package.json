@@ -1,0 +1,47 @@
+{
+  "name": "wme-closures-plus",
+  "displayName": "WME Closures+",
+  "shortDisplayName": "Closures+",
+  "author": "r0den",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "concurrently \"rollup --watch -c --configPlugin typescript --bundleConfigAsCjs\" \"node server.js\"",
+    "build": "rollup -c --configPlugin typescript --bundleConfigAsCjs",
+    "lint": "eslint . --fix"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-replace": "^6.0.2",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@types/geojson": "^7946.0.15",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.3",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "globals": "^15.14.0",
+    "magic-string": "^0.30.17",
+    "prettier": "3.4.2",
+    "rollup": "^4.29.1",
+    "source-map": "^0.7.4",
+    "tslib": "^2.8.1",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.18.2",
+    "wme-sdk-typings": "https://web-assets.waze.com/wme_sdk_docs/production/latest/wme-sdk-typings.tgz"
+  },
+  "private": true,
+  "dependencies": {
+    "concurrently": "^9.1.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
