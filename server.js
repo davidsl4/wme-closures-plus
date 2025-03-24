@@ -1,6 +1,7 @@
 import { createServer } from 'node:http';
 import { readFile } from 'fs/promises';
 import { join } from 'path';
+import { cwd } from 'node:process';
 
 const PORT = 3000;
 const DIST_DIR = './dist';
@@ -12,7 +13,9 @@ const server = createServer(async (req, res) => {
   try {
     if (url.pathname === '/install-dev.user.js') {
       const template = await readFile('tampermonkey.dev-template.js', 'utf-8');
-      const script = template.replaceAll('{{PORT}}', PORT.toString());
+      const script = template
+        .replaceAll('{{PORT}}', PORT.toString())
+        .replaceAll('{{DIST}}', join(cwd(), DIST_DIR));
       res.setHeader('Content-Type', 'application/javascript');
       res.writeHead(200);
       res.end(script);
@@ -32,7 +35,7 @@ const server = createServer(async (req, res) => {
 
     res.writeHead(404);
     res.end('Not found');
-  } catch (err) {
+  } catch {
     res.writeHead(500);
     res.end('Internal server error');
   }

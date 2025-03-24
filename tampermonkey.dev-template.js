@@ -7,6 +7,6 @@
 // @match https://waze.com/*editor*
 // @match https://*.wazestg.com/*editor*
 // @connect localhost
-// @require http://localhost:{{PORT}}/wme-closures-plus.user.js
+// @require {{DIST}}/wme-closures-plus.user.js
 // @grant GM_xmlhttpRequest
 // ==/UserScript==
