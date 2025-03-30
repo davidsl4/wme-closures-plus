@@ -4,7 +4,6 @@ import {
   DetailedHTMLProps,
   HTMLAttributes,
   isValidElement,
-  ReactElement,
   ReactNode,
   Ref,
   RefObject,
@@ -16,7 +15,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { WzTab, WzTabProps } from './WzTab';
+import { WzTab } from './WzTab';
 import { WzTabsRestorationContext } from 'contexts/WzTabsRestorationContext';
 import { useMutationObserver } from 'hooks/useMutationObserver';
 import { unstable_batchedUpdates } from 'react-dom';
@@ -32,15 +31,15 @@ type WzTabsElement = CustomElement<WzTabsElementEventMap>;
 export interface WzTabs {
   activateTabByIndex(tabIndex: number): void;
   activateTabById(tabId: string): void;
+  readonly activeTabIndex: number;
+  readonly activeTabId: string | null;
 }
 
 export interface WzTabsProps
   extends Omit<DetailedHTMLProps<HTMLAttributes<Element>, Element>, 'ref'> {
   ref?: Ref<WzTabs>;
 
-  children:
-    | ReactElement<ReactElement<WzTabProps>>
-    | Iterable<ReactElement<ReactElement<WzTabProps>>>;
+  children: ReactNode;
 
   fixed?: boolean;
   restorationId?: symbol | string;
@@ -149,8 +148,18 @@ export function WzTabs({
     () => ({
       activateTabByIndex,
       activateTabById,
+      get activeTabIndex() {
+        return mountedTabs.findIndex((tab) => isWzTabActive(tab));
+      },
+      get activeTabId() {
+        return (
+          mountedTabs
+            .find((tab) => isWzTabActive(tab))
+            ?.getAttribute('data-tab-id') || null
+        );
+      },
     }),
-    [activateTabByIndex, activateTabById],
+    [activateTabByIndex, activateTabById, mountedTabs],
   );
 
   return (
@@ -222,7 +231,7 @@ function useMountedTabs(
 function isWzTab(node: Node): node is Element {
   return (
     node.nodeType === Node.ELEMENT_NODE &&
-    (node as Element).tagName === 'wz-tab'
+    (node as Element).tagName === 'WZ-TAB'
   );
 }
 

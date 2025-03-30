@@ -21,9 +21,8 @@ export interface WzDialogProps {
   size?: 'xxs' | 'xs' | 'sm' | 'lg' | 'xl';
   alignment?: 'default' | 'center';
   dismissible?: boolean;
-  displayed?: boolean;
 
-  title: ReactNode | string;
+  title?: ReactNode | string;
   controls?: ReactNode;
   children?: ReactNode;
 
@@ -85,13 +84,13 @@ export function WzDialog({
 
   return (
     <wz-dialog
-      ref={(dialogElement: WzDialogElement) => {
+      ref={(dialogElement: WzDialogElement | null) => {
         dialogRef.current = dialogElement;
-        if (openOnMount) dialogElement.showDialog();
+        if (dialogElement && openOnMount) dialogElement.showDialog();
       }}
       {...rest}
     >
-      <wz-dialog-header>{title}</wz-dialog-header>
+      {title && <wz-dialog-header>{title}</wz-dialog-header>}
       <wz-dialog-content>{children}</wz-dialog-content>
       {controls && <wz-dialog-controls>{controls}</wz-dialog-controls>}
     </wz-dialog>
