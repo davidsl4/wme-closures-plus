@@ -1,4 +1,5 @@
 import { DialogOutlet, ReccuringClosureConfigDialog } from 'components/dialogs';
+import { ClosureEditorPanel } from 'components/portals';
 import { useEffect, useRef } from 'react';
 
 export function App() {
@@ -21,8 +22,7 @@ export function App() {
 
   return (
     <>
-      Hello World!
-      <DialogOutlet ref={dialogOutletRef} />
+      <ClosureEditorPanel />
     </>
   );
 }
