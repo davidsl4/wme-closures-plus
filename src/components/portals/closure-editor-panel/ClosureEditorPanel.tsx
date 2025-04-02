@@ -14,6 +14,9 @@ function ClosureEditorPanel(props: ClosureEditorPanelProps) {
 
 const UInjectorComponent = asUInjectorComponent(ClosureEditorPanel, {
   targetSelector: '.edit-closure',
+  targetFilter: (element) => {
+    return !element.closest('div[class^=turnClosuresEditViewContainer]');
+  },
   wrapInContainer: false,
 });
 export { UInjectorComponent as ClosureEditorPanel };
