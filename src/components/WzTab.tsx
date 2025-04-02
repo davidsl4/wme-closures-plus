@@ -5,7 +5,6 @@ import {
   HTMLAttributes,
   isValidElement,
   ReactNode,
-  useEffect,
   useId,
   useRef,
 } from 'react';
@@ -34,10 +33,6 @@ export function WzTab({
   const tabRef = useRef<Element>(null);
   const uniqueId = useId();
   const labelSlotName = `tab-label-${uniqueId}`;
-
-  useEffect(() => {
-    if (id) tabRef.current?.setAttribute('data-tab-id', id);
-  }, [id]);
 
   const tabsWrapperElement = tabRef.current?.parentElement;
   useMutationObserver(
@@ -73,6 +68,7 @@ export function WzTab({
   return (
     <>
       <wz-tab
+        {...{ ['data-tab-id']: id }}
         ref={tabRef}
         disabled={disabled}
         label={isSimpleLabel ? label : undefined}
