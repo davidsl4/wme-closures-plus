@@ -1,19 +1,24 @@
 import { useEffect, useMemo } from 'react';
+import { useEventCallback } from 'usehooks-ts';
 
+interface UseMutationObserverOptions extends MutationObserverInit {
+  cleanUp?: () => void;
+}
 export function useMutationObserver(
   target: Node | undefined | null,
   callback: (mutations: MutationRecord[], observer: MutationObserver) => void,
-  options: MutationObserverInit,
+  { cleanUp, ...initOptions }: UseMutationObserverOptions,
 ): void {
+  const eventCallback = useEventCallback(callback);
   const observer = useMemo(() => {
-    return new MutationObserver(callback);
-  }, [callback]);
+    return new MutationObserver(eventCallback);
+  }, [eventCallback]);
 
   useEffect(() => {
-    if (target) observer.observe(target, options);
+    if (target) observer.observe(target, initOptions);
 
     return () => {
       observer.disconnect();
     };
-  }, [observer, options, target]);
+  }, [observer, initOptions, target, cleanUp]);
 }
