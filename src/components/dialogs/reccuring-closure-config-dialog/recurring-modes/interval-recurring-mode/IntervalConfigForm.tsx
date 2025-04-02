@@ -22,10 +22,18 @@ const DurationsConfigContainer = styled('div')({
 });
 
 export function IntervalConfigForm(props: RecurringModeFormProps) {
-  const [closureDuration, setClosureDuration] = useState(NaN);
+  const [closureDuration, setClosureDuration] = useState<number>(
+    typeof props.initialFieldValues?.closureDuration === 'number' ?
+      props.initialFieldValues.closureDuration
+    : NaN,
+  );
   const closureDurationInputRef = useRef<HTMLInputElement>(null);
   const [intervalBetweenClosures, setIntervalBetweenClosures] =
-    useState<number>(NaN);
+    useState<number>(
+      typeof props.initialFieldValues?.intervalBetweenClosures === 'number' ?
+        props.initialFieldValues.intervalBetweenClosures
+      : NaN,
+    );
   const intervalBetweenClosuresInputRef = useRef<HTMLInputElement | null>(null);
 
   useImperativeHandle(

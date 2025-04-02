@@ -8,24 +8,20 @@ import {
 import { WzTabs } from '../../WzTabs';
 import { WzTab } from '../../WzTab';
 import { DialogLayoutProps } from '../dialog-outlet';
-import {
-  CalculateClosureTimesResponse,
-  RecurringMode,
-} from './recurring-modes';
+import { RecurringMode } from './recurring-modes';
 import { allRecurringModes } from './recurring-modes';
 import { Timeframe } from 'interfaces';
+import { SelectedRecurringMode } from './interfaces';
 
 interface ReccuringClosureConfigDialogResult {
-  readonly recurringMode: Pick<RecurringMode, 'id' | 'name'> & {
-    calculateClosureTimes(
-      timeframe: Timeframe,
-    ): CalculateClosureTimesResponse | Promise<CalculateClosureTimesResponse>;
-  };
+  readonly recurringMode: SelectedRecurringMode;
 }
 
 interface RecurringClosureConfigDialogProps
   extends DialogLayoutProps<ReccuringClosureConfigDialogResult> {
   recurringModes?: RecurringMode[];
+  initialMode?: string;
+  initialFieldValues?: FieldsValuesMap;
 }
 
 type FieldsValuesMap = Record<string, string | number>;
@@ -93,7 +89,13 @@ export function ReccuringClosureConfigDialog({
       >
         {recurringModes.map((recurringMode) => {
           const fieldsValuesMap =
-            fieldsValuesRef.current[recurringMode.id] || createRef();
+            fieldsValuesRef.current[recurringMode.id] ||
+            (() => {
+              const ref = createRef<FieldsValuesMap>();
+              if (props.initialMode === recurringMode.id)
+                ref.current = props.initialFieldValues;
+              return ref;
+            })();
 
           fieldsValuesRef.current[recurringMode.id] = fieldsValuesMap;
           return (
@@ -123,6 +125,10 @@ export function ReccuringClosureConfigDialog({
                   setButtonState: (...args) =>
                     modeSelectionTabsRef.current?.activeTabId ===
                       recurringMode.id && setButtonState(...args),
+                  initialFieldValues:
+                    recurringMode.id === props.initialMode ?
+                      props.initialFieldValues
+                    : undefined,
                 })}
             </WzTab>
           );

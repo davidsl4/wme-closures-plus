@@ -6,6 +6,7 @@ import { ComponentType, Ref } from 'react';
 export interface RecurringModeFormProps
   extends DialogLayoutButtonProps<ModalDialogButtons> {
   fieldsValuesRef: Ref<Record<string, string | number>>;
+  initialFieldValues?: Record<string, string | number>;
 }
 
 export interface CalculateClosureTimesRequest {
