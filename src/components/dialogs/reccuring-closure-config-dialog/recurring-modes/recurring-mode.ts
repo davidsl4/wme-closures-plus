@@ -1,7 +1,10 @@
+import { DialogLayoutButtonProps } from 'components/dialogs/dialog-outlet';
+import { ModalDialogButtons } from 'components/dialogs/dialog-outlet/types';
 import { Timeframe } from 'interfaces';
 import { ComponentType, Ref } from 'react';
 
-export interface RecurringModeFormProps {
+export interface RecurringModeFormProps
+  extends DialogLayoutButtonProps<ModalDialogButtons> {
   fieldsValuesRef: Ref<Record<string, string | number>>;
 }
 

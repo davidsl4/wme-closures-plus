@@ -33,6 +33,10 @@ type FieldsValuesRef = RefObject<FieldsValuesMap>;
 
 export function ReccuringClosureConfigDialog({
   recurringModes = allRecurringModes,
+  enableButton,
+  disableButton,
+  setButtonState,
+  getButtonState,
   ...props
 }: RecurringClosureConfigDialogProps) {
   const modeSelectionTabsRef = useRef<WzTabs>(null);
@@ -67,6 +71,7 @@ export function ReccuringClosureConfigDialog({
   );
 
   const handleTabActive = () => {
+    if (!modeSelectionTabsRef.current) return;
     const { activeTabId } = modeSelectionTabsRef.current;
     if (recurringModes.some((mode) => mode.id === activeTabId))
       activeModeId.current = activeTabId;
@@ -106,6 +111,18 @@ export function ReccuringClosureConfigDialog({
                     fieldsValuesRef.current[recurringMode.id].current =
                       instance;
                   },
+                  enableButton: (...args) =>
+                    modeSelectionTabsRef.current?.activeTabId ===
+                      recurringMode.id && enableButton(...args),
+                  disableButton: (...args) =>
+                    modeSelectionTabsRef.current?.activeTabId ===
+                      recurringMode.id && disableButton(...args),
+                  getButtonState: (...args) =>
+                    modeSelectionTabsRef.current?.activeTabId ===
+                      recurringMode.id && getButtonState(...args),
+                  setButtonState: (...args) =>
+                    modeSelectionTabsRef.current?.activeTabId ===
+                      recurringMode.id && setButtonState(...args),
                 })}
             </WzTab>
           );
