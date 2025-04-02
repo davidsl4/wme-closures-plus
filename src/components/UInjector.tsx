@@ -37,7 +37,8 @@ export interface UInjectorProps {
    * @param element An element matching the {@link targetSelector}.
    * @returns `True` when the element shall be included, or `False` otherwise.
    */
-  targetFilter?: <E extends Element = Element>(element: E) => element is E;
+  // targetFilter?<E extends Element = Element>(element: E): element is E;
+  targetFilter?(element: Element): boolean;
 
   /**
    * Defines where the UI should be rendered relative to the {@link targetSelector}.
@@ -92,7 +93,7 @@ export function UInjector(props: UInjectorProps) {
   const matchingTargets = useQuerySelectorAll(
     containerToObserve,
     props.targetSelector,
-    props.targetFilter,
+    props.targetFilter as (element: Element) => element is Element,
   );
   const wrappingContainers = useWrappingContainers(
     matchingTargets,
