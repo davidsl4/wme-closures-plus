@@ -24,21 +24,34 @@ export function DailyConfigForm(
   props.setButtonState('APPLY', selectedDays.length > 0);
 
   return (
-    <DaySelector
-      value={selectedDays}
-      onChange={(newValue) => setSelectedDays(newValue)}
-      onDayChange={(day, state) => {
-        setSelectedDays((selectedDays) => {
-          const dayIndex = selectedDays.indexOf(day);
-          if (state && dayIndex !== -1) return;
-          if (!state && dayIndex === -1) return;
-          if (state) return [...selectedDays, day];
-          return [
-            ...selectedDays.slice(0, dayIndex),
-            ...selectedDays.slice(dayIndex + 1),
-          ];
-        });
-      }}
-    />
+    <>
+      <DaySelector
+        value={selectedDays}
+        onChange={(newValue) => setSelectedDays(newValue)}
+        onDayChange={(day, state) => {
+          setSelectedDays((selectedDays) => {
+            const dayIndex = selectedDays.indexOf(day);
+            if (state && dayIndex !== -1) return;
+            if (!state && dayIndex === -1) return;
+            if (state) return [...selectedDays, day];
+            return [
+              ...selectedDays.slice(0, dayIndex),
+              ...selectedDays.slice(dayIndex + 1),
+            ];
+          });
+        }}
+      />
+
+      <wz-caption
+        style={{
+          display: 'inline-block',
+          marginTop: 'var(--space-always-xs, 8px)',
+        }}
+      >
+        A closure will be created for each day you select. Each of these
+        closures will run during the hours and between the overall dates you
+        already set up for this closure.
+      </wz-caption>
+    </>
   );
 }
