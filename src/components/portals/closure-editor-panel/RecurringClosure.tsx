@@ -59,7 +59,7 @@ export function RecurringClosure({ closureEditPanel }: RecurringClosureProps) {
     if (dismissReason) return;
 
     setIsEnabled(true);
-    setConfig(result.recurringMode);
+    setConfig(result.getRecurringMode());
   };
 
   const handleCheckboxChanged = (event: SyntheticEvent<HTMLInputElement>) => {

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { RecurringModeFormProps } from '../recurring-mode';
-import { useState, useRef, useImperativeHandle, useEffect } from 'react';
+import { useState, useRef, useImperativeHandle } from 'react';
 import { DurationPicker } from 'components/DurationPicker';
 import { formatMinutes, createFocusHandler } from 'utils';
 
@@ -45,12 +45,10 @@ export function IntervalConfigForm(props: RecurringModeFormProps) {
     [closureDuration, intervalBetweenClosures],
   );
 
-  useEffect(() => {
-    props.setButtonState(
-      'APPLY',
-      !isNaN(closureDuration) && !isNaN(intervalBetweenClosures),
-    );
-  }, [closureDuration, intervalBetweenClosures, props]);
+  props.setButtonState(
+    'APPLY',
+    !isNaN(closureDuration) && !isNaN(intervalBetweenClosures),
+  );
 
   return (
     <div>

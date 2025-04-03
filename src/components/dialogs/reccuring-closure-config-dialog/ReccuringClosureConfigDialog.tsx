@@ -4,8 +4,9 @@ import {
   RefObject,
   useImperativeHandle,
   useRef,
+  useState,
 } from 'react';
-import { WzTabs } from '../../WzTabs';
+import { TabActiveEvent, WzTabs } from '../../WzTabs';
 import { WzTab } from '../../WzTab';
 import { DialogLayoutProps } from '../dialog-outlet';
 import { RecurringMode } from './recurring-modes';
@@ -14,7 +15,7 @@ import { Timeframe } from 'interfaces';
 import { SelectedRecurringMode } from './interfaces';
 
 interface ReccuringClosureConfigDialogResult {
-  readonly recurringMode: SelectedRecurringMode;
+  getRecurringMode(): SelectedRecurringMode;
 }
 
 interface RecurringClosureConfigDialogProps
@@ -37,41 +38,36 @@ export function ReccuringClosureConfigDialog({
 }: RecurringClosureConfigDialogProps) {
   const modeSelectionTabsRef = useRef<WzTabs>(null);
   const fieldsValuesRef = useRef<Record<string, FieldsValuesRef>>({});
-  const activeModeId = useRef<string>(null);
+  const [activeModeId, setActiveModeId] = useState<string>(
+    props.initialMode ?? 'INTERVAL',
+  );
 
   useImperativeHandle(
     props.stateRef,
     () =>
       ({
-        get recurringMode() {
-          const mode = recurringModes.find(
-            (mode) => mode.id === activeModeId.current,
-          );
+        getRecurringMode() {
+          const mode = recurringModes.find((mode) => mode.id === activeModeId);
           if (!mode) return null;
 
           return {
             ...mode,
-            id: activeModeId.current,
-            fields: fieldsValuesRef.current[activeModeId.current].current,
+            id: activeModeId,
+            fields: fieldsValuesRef.current[activeModeId].current,
             calculateClosureTimes: (timeframe: Timeframe) => {
               return mode.calculateClosureTimes({
                 timeframe,
-                fieldsValues:
-                  fieldsValuesRef.current[activeModeId.current].current,
+                fieldsValues: fieldsValuesRef.current[activeModeId].current,
               });
             },
           };
         },
       }) as const,
-    [recurringModes],
+    [activeModeId, recurringModes],
   );
 
-  const handleTabActive = () => {
-    if (!modeSelectionTabsRef.current) return;
-    const { activeTabId } = modeSelectionTabsRef.current;
-    if (recurringModes.some((mode) => mode.id === activeTabId))
-      activeModeId.current = activeTabId;
-    else activeModeId.current = null;
+  const handleTabActive = (event: TabActiveEvent) => {
+    setActiveModeId(event.detail.tabId ?? null);
   };
 
   return (
@@ -86,6 +82,7 @@ export function ReccuringClosureConfigDialog({
         fixed
         style={{ marginTop: 8 }}
         onTabActive={handleTabActive}
+        activeTabId={activeModeId}
       >
         {recurringModes.map((recurringMode) => {
           const fieldsValuesMap =
@@ -114,17 +111,15 @@ export function ReccuringClosureConfigDialog({
                       instance;
                   },
                   enableButton: (...args) =>
-                    modeSelectionTabsRef.current?.activeTabId ===
-                      recurringMode.id && enableButton(...args),
+                    activeModeId === recurringMode.id && enableButton(...args),
                   disableButton: (...args) =>
-                    modeSelectionTabsRef.current?.activeTabId ===
-                      recurringMode.id && disableButton(...args),
+                    activeModeId === recurringMode.id && disableButton(...args),
                   getButtonState: (...args) =>
-                    modeSelectionTabsRef.current?.activeTabId ===
-                      recurringMode.id && getButtonState(...args),
+                    activeModeId === recurringMode.id &&
+                    getButtonState(...args),
                   setButtonState: (...args) =>
-                    modeSelectionTabsRef.current?.activeTabId ===
-                      recurringMode.id && setButtonState(...args),
+                    activeModeId === recurringMode.id &&
+                    setButtonState(...args),
                   initialFieldValues:
                     recurringMode.id === props.initialMode ?
                       props.initialFieldValues
