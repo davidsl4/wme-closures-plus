@@ -35,6 +35,8 @@ export interface WzTabs {
   readonly activeTabId: string | null;
 }
 
+export type TabActiveEvent = CustomEvent<{ isActive: true; tabId?: string }>;
+
 export interface WzTabsProps
   extends Omit<DetailedHTMLProps<HTMLAttributes<Element>, Element>, 'ref'> {
   ref?: Ref<WzTabs>;
@@ -44,7 +46,9 @@ export interface WzTabsProps
   fixed?: boolean;
   restorationId?: symbol | string;
 
-  onTabActive?(event: CustomEvent<{ isActive: true }>): void;
+  activeTabId?: string;
+
+  onTabActive?(event: TabActiveEvent): void;
   onTabEnabled?(event: CustomEvent<void>): void;
   onTabDisabled?(event: CustomEvent<void>): void;
 }
@@ -54,6 +58,7 @@ export function WzTabs({
   children,
   fixed,
   restorationId,
+  activeTabId,
   onTabActive,
   onTabEnabled,
   onTabDisabled,
@@ -81,6 +86,7 @@ export function WzTabs({
       const tabId = tab.getAttribute('data-tab-id');
       if (restorationId && tabId) tabsRestorationMap.set(restorationId, tabId);
 
+      (evt as TabActiveEvent).detail.tabId = tabId;
       onTabActive?.(evt);
     },
     tabsRef,
@@ -140,8 +146,15 @@ export function WzTabs({
   }, [activateTabById, activateTabByIndex, restorationId, tabsRestorationMap]);
 
   useEffect(() => {
-    if (!mountedTabs.some((tab) => isWzTabActive(tab))) activateDefaultTab();
-  }, [activateDefaultTab, mountedTabs]);
+    if (!activeTabId && !mountedTabs.some((tab) => isWzTabActive(tab)))
+      activateDefaultTab();
+  }, [activateDefaultTab, activeTabId, mountedTabs]);
+
+  useEffect(() => {
+    if (activeTabId) {
+      activateTabById(activeTabId);
+    }
+  }, [activateTabById, activeTabId, mountedTabs.length]);
 
   useImperativeHandle(
     ref,
