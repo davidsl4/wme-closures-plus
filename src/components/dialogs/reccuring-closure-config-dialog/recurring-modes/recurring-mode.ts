@@ -1,29 +1,35 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DialogLayoutButtonProps } from 'components/dialogs/dialog-outlet';
 import { ModalDialogButtons } from 'components/dialogs/dialog-outlet/types';
 import { Timeframe } from 'interfaces';
 import { ComponentType, Ref } from 'react';
 
-export interface RecurringModeFormProps
-  extends DialogLayoutButtonProps<ModalDialogButtons> {
-  fieldsValuesRef: Ref<Record<string, string | number>>;
-  initialFieldValues?: Record<string, string | number>;
+export interface RecurringModeFormProps<
+  F extends Record<string, any> = Record<string, any>,
+> extends DialogLayoutButtonProps<ModalDialogButtons> {
+  fieldsValuesRef: Ref<F>;
+  initialFieldValues?: F;
 }
 
-export interface CalculateClosureTimesRequest {
+export interface CalculateClosureTimesRequest<
+  F extends Record<string, any> = Record<string, any>,
+> {
   timeframe: Timeframe;
-  fieldsValues: Record<string, string | number>;
+  fieldsValues: F;
 }
 
 export interface CalculateClosureTimesResponse {
   timeframes: Timeframe[];
 }
 
-export interface RecurringMode {
+export interface RecurringMode<
+  F extends Record<string, any> = Record<string, any>,
+> {
   id: string;
   name: string;
   disabledReason?: string | null;
-  formComponent?: ComponentType<RecurringModeFormProps>;
+  formComponent?: ComponentType<RecurringModeFormProps<F>>;
   calculateClosureTimes(
-    request: CalculateClosureTimesRequest,
+    request: CalculateClosureTimesRequest<F>,
   ): CalculateClosureTimesResponse | Promise<CalculateClosureTimesResponse>;
 }

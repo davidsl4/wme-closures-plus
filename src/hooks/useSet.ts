@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-interface Set<T> extends Iterable<T> {
+export interface Set<T> extends Iterable<T> {
   values(): T[];
   add(value: T): void;
   clear(): void;
