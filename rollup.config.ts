@@ -60,7 +60,9 @@ export default {
     },
   ],
   plugins: [
-    typescript(),
+    typescript({
+      exclude: ['**/*.spec.ts', '**/*.spec.tsx'],
+    }),
     commonjs(),
     resolve(),
     replace({

@@ -12,5 +12,6 @@
     "outDir": "dist/",
     "jsx": "react-jsx"
   },
-  "include": ["src", "rollup.config.ts"]
+  "include": ["src", "rollup.config.ts"],
+  "exclude": ["**/*.spec.ts"]
 }
