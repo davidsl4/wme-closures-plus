@@ -31,5 +31,5 @@ export interface RecurringMode<
   formComponent?: ComponentType<RecurringModeFormProps<F>>;
   calculateClosureTimes(
     request: CalculateClosureTimesRequest<F>,
-  ): CalculateClosureTimesResponse | Promise<CalculateClosureTimesResponse>;
+  ): CalculateClosureTimesResponse;
 }

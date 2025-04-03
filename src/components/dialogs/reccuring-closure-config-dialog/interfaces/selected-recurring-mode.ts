@@ -7,7 +7,5 @@ import {
 export interface SelectedRecurringMode
   extends Pick<RecurringMode, 'id' | 'name'> {
   fields: Record<string, string | number>;
-  calculateClosureTimes(
-    timeframe: Timeframe,
-  ): CalculateClosureTimesResponse | Promise<CalculateClosureTimesResponse>;
+  calculateClosureTimes(timeframe: Timeframe): CalculateClosureTimesResponse;
 }
