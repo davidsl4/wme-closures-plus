@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="docs/contribution-banner.svg" alt="Closures+ Contribution Guidelines Banner" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="/docs/contribution-banner-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="/docs/contribution-banner-light.svg">
+    <img alt="Closures+ Contribution Guidelines Banner" src="/docs/contribution-banner-light.svg">
+  </picture>
 </p>
 
 # Contributing to Closures+

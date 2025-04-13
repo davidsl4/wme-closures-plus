@@ -1,5 +1,9 @@
 <p align="center">
-   <img src="docs/logo.svg" alt="W.M.E Closures Plus Logo" />
+   <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="/docs/logo-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="/docs/logo-light.svg">
+    <img alt="W.M.E Closures Plus Logo" src="/docs/logo-light.svg">
+  </picture>
 </p>
 
 <p align="center">
