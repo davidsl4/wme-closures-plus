@@ -6,4 +6,5 @@
 // @match https://*.waze.com/*editor*
 // @match https://waze.com/*editor*
 // @match https://*.wazestg.com/*editor*
+// @require file:///{{DIST}}/wme-sdk-plus.js
 // ==/UserScript==
