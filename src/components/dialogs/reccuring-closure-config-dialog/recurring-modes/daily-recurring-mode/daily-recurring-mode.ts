@@ -90,7 +90,7 @@ function getDailyTimeframes(timeframe: Timeframe): Timeframe[] {
  * @param {Date} timeframe.endDate The end date and time.
  * @returns {boolean} True if the end time is earlier in the day than the start time, false otherwise.
  */
-function isOvernightTimeframe(timeframe: Timeframe) {
+function isOvernightTimeframe(timeframe: Timeframe): boolean {
   // Optional: Add input validation
   if (
     !timeframe ||
