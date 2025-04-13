@@ -6,13 +6,7 @@ import { createSafePortal } from 'utils/create-safe-portal';
 import { css, cx } from '@emotion/css';
 import { SelectedRecurringMode } from 'components/dialogs/reccuring-closure-config-dialog/interfaces';
 import { useEventListener } from 'usehooks-ts';
-import {
-  interceptAfterInvocation,
-  MethodInterceptor,
-} from 'method-interceptor';
-import { getWindow } from 'utils/window-utils';
-import { ClosureActionBuilder } from 'types';
-import { AddRoadClosure } from 'types/waze/map-editor/Actions/AddRoadClosure';
+import { useWmeSdk } from 'contexts/WmeSdkContext';
 
 const formGroupClass = css({
   display: 'flex',
@@ -98,19 +92,18 @@ export function RecurringClosure({ closureEditPanel }: RecurringClosureProps) {
     ) as HTMLButtonElement | null;
   }, [closureEditPanel]);
   useSaveButtonInterceptor(nativeSaveButton, (closures) => {
-    if (!config) return closures;
+    if (!config || !isEnabled) return closures;
+
     return closures.flatMap((closure) => {
-      const startDate = new Date(closure.startDate);
-      const endDate = new Date(closure.endDate);
       const { timeframes: targetTimeframes } = config.calculateClosureTimes({
-        startDate,
-        endDate,
+        startDate: closure.startDate,
+        endDate: closure.endDate,
       });
       return targetTimeframes.map((timeframe) => {
         return {
           ...closure,
-          startDate: stringifyDate(timeframe.startDate),
-          endDate: stringifyDate(timeframe.endDate),
+          startDate: timeframe.startDate,
+          endDate: timeframe.endDate,
         };
       });
     });
@@ -145,68 +138,45 @@ function useSaveButtonInterceptor(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modifyClosures: (roadClosuresAttributes: any[]) => any[],
 ) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const wmeSdk: any = useWmeSdk();
   useEventListener(
     'pointerdown',
     () => {
-      const ww = getWindow<{
-        require(
-          module: 'Waze/Modules/Closures/Models/ClosureActionBuilder',
-        ): ClosureActionBuilder;
-      }>();
-      const closureActionBuilder = ww.require(
-        'Waze/Modules/Closures/Models/ClosureActionBuilder',
-      );
-      const interceptor = new MethodInterceptor(
-        closureActionBuilder,
-        '_addRoadClosures',
-        interceptAfterInvocation((result, closureGroupModel, loggedInUser) => {
-          console.log(
-            'Intercepted _addRoadClosures',
-            closureGroupModel,
-            loggedInUser,
-            result,
-          );
+      const unregister = wmeSdk.Events.registerMiddleware(
+        'closures.save',
+        (context, next) => {
           (() => {
-            const addClosureActions =
-              result.getSubActions() as AddRoadClosure[];
-            if (!addClosureActions.length) return;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const AddRoadClosure: any = addClosureActions[0].constructor;
-            const RoadClosure = addClosureActions[0].closure.constructor;
-            const closureAttributes = addClosureActions.map(
-              (addClosureAction) => addClosureAction.closure.getAttributes(),
-            );
-            if (modifyClosures) {
-              const modifiedClosures = modifyClosures(closureAttributes);
-              result.subActions = modifiedClosures.map((closureAttributes) => {
-                closureAttributes.id = closureActionBuilder._getNewClosureID();
-                const roadClosure = new RoadClosure(closureAttributes);
-                const segmentId = closureAttributes.segID;
-                const segment =
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  getWindow<any>().W.model.segments.getObjectById(segmentId);
-                return new AddRoadClosure(roadClosure, segment);
-              });
+            if (!modifyClosures) return;
+
+            const modifiedClosures = modifyClosures(context.data.closures);
+            // modified closures might include duplicate ids if a single closure have been updated with recurring closures
+            // ensure we catch this case and only preserve the id for the first closure, and add extra closures
+            const seenIds = new Set(); // Keep track of IDs we've already encountered
+            for (const closure of modifiedClosures) {
+              // Check if the closure has an ID and if we've seen it before
+              if (closure.id != null) {
+                // Use != null to catch both null and undefined
+                if (seenIds.has(closure.id)) {
+                  // Duplicate ID found, set it to null
+                  closure.id = null;
+                  continue;
+                }
+
+                // First time seeing this ID, add it to the set
+                seenIds.add(closure.id);
+              }
             }
+            context.data.closures = modifiedClosures;
           })();
-          interceptor.restore();
-          return result;
-        }),
+          next();
+          unregister();
+        },
       );
-      interceptor.enable();
       setTimeout(() => {
-        interceptor.restore();
+        unregister();
       }, 1000);
     },
     { current: saveButtonElement },
   );
-}
-
-function stringifyDate(value: Date): string {
-  const year = value.getFullYear().toString().padStart(2, '4');
-  const month = (value.getMonth() + 1).toString().padStart(2, '0');
-  const day = value.getDate().toString().padStart(2, '0');
-  const hours = value.getHours().toString().padStart(2, '0');
-  const minutes = value.getMinutes().toString().padStart(2, '0');
-  return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
