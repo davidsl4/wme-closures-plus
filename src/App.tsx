@@ -1,8 +1,13 @@
 import { DialogOutlet, ReccuringClosureConfigDialog } from 'components/dialogs';
 import { ClosureEditorPanel } from 'components/portals';
+import { WmeSdkProvider } from 'contexts/WmeSdkContext';
 import { useEffect, useRef } from 'react';
+import { WmeSDK } from 'wme-sdk-typings';
 
-export function App() {
+interface AppProps {
+  wmeSdk?: WmeSDK;
+}
+export function App(props: AppProps) {
   const dialogOutletRef = useRef<DialogOutlet>(null);
 
   useEffect(() => {
@@ -21,9 +26,9 @@ export function App() {
   }, []);
 
   return (
-    <>
+    <WmeSdkProvider wmeSdk={props.wmeSdk}>
       <ClosureEditorPanel />
-    </>
+    </WmeSdkProvider>
   );
 }
 App.displayName = __SCRIPT_CAMEL_CASE_NAME__;
