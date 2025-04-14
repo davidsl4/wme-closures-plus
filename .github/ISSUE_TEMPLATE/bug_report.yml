@@ -1,0 +1,79 @@
+name: Bug Report
+description: File a bug report.
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: input
+    id: contact
+    attributes:
+      label: How can we get in touch with you if we need more info?
+      description: Specify here your desired way of communication, either it be an email address, Discord username, or your Waze username.
+      placeholder: ex. email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: "A bug happened!"
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: What version of our script are you running?
+      options:
+        - Alpha
+        - Other (Please specify your version in the "Additional Context" section)
+      default: 0
+    validations:
+      required: true
+  - type: dropdown
+    id: waze-env
+    attributes:
+      label: Waze Environment
+      description: What Waze environment have you been using?
+      options:
+        - Production (www.waze.com/editor)
+        - Beta (beta.waze.com/editor)
+        - Other (Please specify in the "Additional Context" section)
+      default: 0
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+        - Brave
+        - Chrome
+        - Chromium based (Microsoft Edge, Opera, Opera GX, Brave, or other Chromium based browser)
+        - Firefox
+        - Microsoft Edge
+        - Opera (including Opera GX)
+        - Safari
+        - Other (Please specify in the "Additional Context" section)
+    validations:
+      required: true
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Add here any additional information you believe might be relevant and helpful when resolving your issue.
+    validations:
+      required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/davidsl4/wme-closures-plus/blob/main/CODE_OF_CONDUCT.md). 
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
