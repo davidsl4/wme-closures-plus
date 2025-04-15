@@ -3,7 +3,7 @@
   "displayName": "WME Closures+",
   "shortDisplayName": "Closures+",
   "author": "r0den",
-  "version": "1.0.0",
+  "version": "0.1.0-alpha.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
