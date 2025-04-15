@@ -182,7 +182,7 @@ export function useDurationInput({
 }
 
 function useDurationModifiers(modifiers: DurationModifier[]) {
-  const sortedModifiers = modifiers.toSorted(
+  const sortedModifiers = [...modifiers].sort(
     (a, b) => b.multiplier - a.multiplier,
   );
 
