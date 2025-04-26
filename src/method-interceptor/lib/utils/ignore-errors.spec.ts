@@ -1,4 +1,4 @@
-import { ignoreErrors } from './ignore-errors.js';
+import { ignoreErrors } from './ignore-errors';
 
 function errorThrowingFunction(): number {
   throw new Error('Error is thrown');

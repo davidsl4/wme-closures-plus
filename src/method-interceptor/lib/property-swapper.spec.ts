@@ -1,4 +1,4 @@
-import { PropertySwapper } from './property-swapper.js';
+import { PropertySwapper } from './property-swapper';
 
 describe('PropertySwapper', () => {
   let object: {
