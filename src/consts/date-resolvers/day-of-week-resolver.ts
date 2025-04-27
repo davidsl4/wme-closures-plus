@@ -1,5 +1,6 @@
 import { Weekday } from 'enums';
 import { createDateResolver } from './date-resolver';
+import { DateOnly } from 'classes';
 
 interface DayOfWeekResolverArgs {
   dayOfWeek: Weekday;
@@ -32,9 +33,8 @@ export const DAY_OF_WEEK_RESOLVER = createDateResolver(
     const today = new Date();
     const todayDayOfWeek = today.getUTCDay();
     const daysUntilNextOccurrence = (dayOfWeek + 7 - todayDayOfWeek) % 7 || 7; // If it's today, go to next week
-    const nextOccurrence = new Date(today);
+    const nextOccurrence = new DateOnly(today);
     nextOccurrence.setUTCDate(today.getUTCDate() + daysUntilNextOccurrence);
-    nextOccurrence.setUTCHours(today.getUTCHours(), today.getUTCMinutes(), today.getUTCSeconds(), 0); // Set time to the same as today
     return nextOccurrence;
   },
 );
