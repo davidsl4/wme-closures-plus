@@ -15,7 +15,7 @@ interface ClosureDurationalEnd {
   };
 }
 
-export interface ClosureTemplate {
+export interface ClosurePreset {
   id: string;
   name: string;
   description?: string;
