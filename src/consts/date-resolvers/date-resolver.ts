@@ -19,3 +19,8 @@ export function createDateResolver<A, N extends string>(
     resolve,
   };
 }
+
+export type SerializedDateResolver<D extends DateResolver = DateResolver> = {
+  name: D['name'];
+  args: Parameters<D['resolve']>[0];
+};
