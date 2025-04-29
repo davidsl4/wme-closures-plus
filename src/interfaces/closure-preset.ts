@@ -15,12 +15,14 @@ interface ClosureDurationalEnd {
   };
 }
 
-export interface ClosurePreset {
+export interface ClosurePresetMetadata {
   id: string;
-  name: string;
-  description?: string;
   createdAt: string;
   updatedAt: string;
+}
+export interface ClosurePreset extends ClosurePresetMetadata {
+  name: string;
+  description?: string;
   closureDetails: {
     description?: string;
     startDate: SerializedDateResolver;
