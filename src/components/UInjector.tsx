@@ -17,12 +17,12 @@ import { createPortal } from 'react-dom';
 import { arrayExclusion } from 'utils/array';
 import { isElementNode } from 'utils/node-utils';
 
-export interface UInjectorRenderUIOptions {
+export interface UInjectorRenderUIOptions<E extends Element = Element> {
   /** The target DOM element for which the UI will be injected */
-  target: Element;
+  target: E;
 }
 
-export interface UInjectorProps {
+export interface UInjectorProps<E extends Element = Element> {
   /**
    * Specifies the container to observe for mutations. Either a direct {@link Element} node,
    * or a {@link String string} representing the query selector for the container.
@@ -65,7 +65,7 @@ export interface UInjectorProps {
    * @param options The options object containing the target element.
    * @returns The React node to render.
    */
-  renderUI(options: UInjectorRenderUIOptions): ReactNode;
+  renderUI(options: UInjectorRenderUIOptions<E>): ReactNode;
 
   /**
    * Should the injector wrap your target UI within its own container.
@@ -86,7 +86,9 @@ export interface UInjectorProps {
    */
   containerTransformer?: (container: HTMLDivElement) => void | (() => void);
 }
-export function UInjector(props: UInjectorProps) {
+export function UInjector<E extends Element = Element>(
+  props: UInjectorProps<E>,
+) {
   const containerToObserve: Element = useMemo(() => {
     if (!props.observedContainer) return document.body;
 
@@ -96,12 +98,12 @@ export function UInjector(props: UInjectorProps) {
     return document.querySelector(props.observedContainer);
   }, [props.observedContainer]);
 
-  const matchingTargets = useQuerySelectorAll(
+  const matchingTargets = useQuerySelectorAll<E>(
     containerToObserve,
     props.targetSelector,
-    props.targetFilter as (element: Element) => element is Element,
+    props.targetFilter as (element: Element) => element is E,
   );
-  const wrappingContainers = useWrappingContainers(
+  const wrappingContainers = useWrappingContainers<E>(
     matchingTargets,
     props.containerTransformer,
   );
