@@ -1,5 +1,10 @@
 import { TrackableElement, useQuerySelectorAll } from 'hooks';
 import {
+  CONTINUE_INVOCATION,
+  interceptBeforeInvocation,
+  MethodInterceptor,
+} from 'method-interceptor';
+import {
   ReactNode,
   useCallback,
   useEffect,
@@ -149,6 +154,21 @@ export function UInjector(props: UInjectorProps) {
       });
 
       for (const [trackableTarget, wrappingContainer] of wrappingContainers) {
+        new MethodInterceptor(
+          wrappingContainer,
+          'removeChild',
+          interceptBeforeInvocation(
+            (child: Node): Node | typeof CONTINUE_INVOCATION => {
+              const childIndexInMovedNodes = movedNodes.findIndex(
+                ({ node }) => node === child,
+              );
+              if (childIndexInMovedNodes === -1) return CONTINUE_INVOCATION;
+              movedNodes.splice(childIndexInMovedNodes, 1);
+              return trackableTarget.element.removeChild(child);
+            },
+          ),
+        ).enable();
+
         const nodes = Array.from(wrappingContainer.childNodes);
         moveNodesToTarget(nodes, trackableTarget.element);
         observer.observe(wrappingContainer, { childList: true });
