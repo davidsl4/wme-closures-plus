@@ -153,7 +153,7 @@ export function UInjector(props: UInjectorProps) {
         moveNodesToTarget(nodes, trackableTarget.element);
         observer.observe(wrappingContainer, { childList: true });
         nodes.forEach((node) =>
-          movedNodes.push({ node, target: trackableTarget.element }),
+          movedNodes.push({ node, target: wrappingContainer }),
         );
       }
 
