@@ -167,7 +167,7 @@ export function UInjector<E extends Element = Element>(
               );
               if (childIndexInMovedNodes === -1) return CONTINUE_INVOCATION;
               movedNodes.splice(childIndexInMovedNodes, 1);
-              return trackableTarget.element.removeChild(child);
+              return child.parentNode.removeChild(child);
             },
           ),
         ).enable();
