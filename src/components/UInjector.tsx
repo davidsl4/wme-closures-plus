@@ -8,6 +8,7 @@ import {
   ReactNode,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -131,7 +132,7 @@ export function UInjector(props: UInjectorProps) {
     [props.position],
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!(props.wrapInContainer ?? true)) {
       const movedNodes: Array<{ node: Node; target: Element }> = [];
 
