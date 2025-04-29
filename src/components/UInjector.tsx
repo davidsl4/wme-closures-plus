@@ -261,7 +261,7 @@ function useWrappingContainers<E extends Element = Element>(
         transformedContainersMap.current.get(container);
       if (appliedTransformer) {
         if (appliedTransformer.transformer === containerTransformer) continue;
-        appliedTransformer?.destructor();
+        appliedTransformer?.destructor?.();
       }
 
       const destructor = containerTransformer?.(container);
