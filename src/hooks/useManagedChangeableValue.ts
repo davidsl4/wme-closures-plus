@@ -2,19 +2,23 @@ import {
   ChangeEvent,
   ChangeEventHandler,
   InputHTMLAttributes,
+  SelectHTMLAttributes,
+  TextareaHTMLAttributes,
   useReducer,
 } from 'react';
 
-type ValueType = InputHTMLAttributes<HTMLInputElement>['value'];
+type HTMLElementWithValue = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+type HTMLElementWithValueAttributes = InputHTMLAttributes<HTMLInputElement> | TextareaHTMLAttributes<HTMLTextAreaElement> | SelectHTMLAttributes<HTMLSelectElement>;
+type ValueType = HTMLElementWithValueAttributes['value'];
 
-interface ChangeableValueProps {
+interface ChangeableValueProps<E extends HTMLElement> {
   value?: ValueType;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<E>;
 }
 
-export function useManagedChangeableValue(
-  props: ChangeableValueProps,
-): ChangeableValueProps {
+export function useManagedChangeableValue<E extends HTMLElementWithValue = HTMLInputElement>(
+  props: ChangeableValueProps<E>,
+): ChangeableValueProps<E> {
   const [uncontrolledValue, dispatchUncontrolledChange] = useValueReducer('');
   const { value: controlledValue, onChange: dispatchControlledChange } = props;
 
@@ -27,10 +31,10 @@ export function useManagedChangeableValue(
   };
 }
 
-function useValueReducer(initialState: ValueType) {
+function useValueReducer<E extends HTMLElementWithValue>(initialState: ValueType) {
   const [state, dispatch] = useReducer<
     ValueType,
-    [ChangeEvent<HTMLInputElement>]
+    [ChangeEvent<E>]
   >((_prevValue, changeEvent) => {
     return changeEvent.target.value;
   }, initialState);
