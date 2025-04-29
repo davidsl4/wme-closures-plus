@@ -158,10 +158,10 @@ export function UInjector(props: UInjectorProps) {
       }
 
       return () => {
+        observer.disconnect();
         for (const { node, target } of movedNodes) {
           target.append(node);
         }
-        observer.disconnect();
       };
     } else {
       for (const [trackableTarget, wrappingContainer] of wrappingContainers) {
