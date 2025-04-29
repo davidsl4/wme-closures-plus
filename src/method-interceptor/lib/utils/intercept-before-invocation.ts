@@ -1,7 +1,7 @@
 import { KeysOfFunctions } from '../keys-of-type.js';
 import { InterceptionFunction } from '../method-interceptor.js';
 
-export const CONTINUE_INVOCATION = Symbol('CONTINUE INVOCATION') as unknown as symbol & { __lock: 'CONTINUE_INVOCATION_SYMBOL' };
+export const CONTINUE_INVOCATION: unique symbol = Symbol('CONTINUE INVOCATION');
 
 export function interceptBeforeInvocation<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

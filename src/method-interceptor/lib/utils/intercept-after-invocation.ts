@@ -1,9 +1,9 @@
 import { KeysOfFunctions } from '../keys-of-type.js';
 import { InterceptionFunction } from '../method-interceptor.js';
 
-export const RETURN_ORIGINAL_VALUE = Symbol(
+export const RETURN_ORIGINAL_VALUE: unique symbol = Symbol(
   'RETURN ORIGINAL INVOCATION VALUE',
-) as unknown as symbol & { __lock: 'RET_ORIG_INVOKE_VAL' };
+);
 
 export function interceptAfterInvocation<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
