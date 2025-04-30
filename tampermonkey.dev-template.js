@@ -7,7 +7,7 @@
 // @match https://waze.com/*editor*
 // @match https://*.wazestg.com/*editor*
 // @connect localhost
-// @require https://cdn.jsdelivr.net/gh/WazeSpace/wme-sdk-plus@1.1.0-alpha.3/wme-sdk-plus.js
+// @require https://cdn.jsdelivr.net/gh/WazeSpace/wme-sdk-plus@v1/wme-sdk-plus.js
 // @require file:///{{DIST}}/wme-closures-plus.user.js
 // @grant GM_xmlhttpRequest
 // ==/UserScript==
