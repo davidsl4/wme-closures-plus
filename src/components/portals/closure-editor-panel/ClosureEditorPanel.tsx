@@ -1,9 +1,13 @@
 import { asUInjectorComponent } from 'utils/as-uinjector-component';
 import { RecurringClosure } from './RecurringClosure';
-import { ClosureEditorFormContextProvider } from 'contexts/ClosureEditorFormContext';
+import {
+  ClosureEditorFormContextConsumer,
+  ClosureEditorFormContextProvider,
+} from 'contexts';
 import { useChangeTabPadding } from 'hooks';
 import { ClosureEditorGroup } from './ClosureEditorGroup';
 import { ClosurePresetDropdown } from 'components/closure-presets/ClosurePresetDropdown';
+import { applyClosurePreset } from 'utils';
 
 interface ClosureEditorPanelProps {
   target: HTMLElement;
@@ -25,7 +29,16 @@ function ClosureEditorPanel(props: ClosureEditorPanelProps) {
       target={props.target as HTMLFormElement}
     >
       <ClosureEditorGroup hasBorder>
-        <ClosurePresetDropdown label="Select Closure Preset" />
+        <ClosureEditorFormContextConsumer>
+          {(closureEditorForm) => (
+            <ClosurePresetDropdown
+              label="Select Closure Preset"
+              onSelect={(preset) => {
+                applyClosurePreset(preset, closureEditorForm);
+              }}
+            />
+          )}
+        </ClosureEditorFormContextConsumer>
       </ClosureEditorGroup>
       <RecurringClosure closureEditPanel={props.target} />
     </ClosureEditorFormContextProvider>

@@ -14,20 +14,28 @@ interface ClosurePresetDropdownProps {
 export function ClosurePresetDropdown(props: ClosurePresetDropdownProps) {
   const options = useOptionsWithInheritance(props.options);
   const optionsMap = useOptionsMap(options);
-  const selectValueProps = useManagedChangeableValue<HTMLSelectElement>({
-    value: props.selectedId,
-    onChange: (event) => {
-      if (!optionsMap.has(event.target.value)) return;
-      props.onSelect?.(optionsMap.get(event.target.value)!);
-    },
-  });
+
+  const handleChange = (event: Event) => {
+    if (!optionsMap.has((event.target as HTMLSelectElement).value)) return;
+    props.onSelect?.(
+      optionsMap.get((event.target as HTMLSelectElement).value)!,
+    );
+  };
 
   return (
     <wz-select
       {...props.selectProps}
       label={props.label}
       placeholder={props.placeholder}
-      {...selectValueProps}
+      ref={(select: HTMLSelectElement) => {
+        if (!select) return;
+
+        select.addEventListener('change', handleChange);
+
+        return () => {
+          select.removeEventListener('change', handleChange);
+        };
+      }}
     >
       {Array.from(optionsMap.values()).map((option) => (
         <wz-option key={option.id} value={option.id}>

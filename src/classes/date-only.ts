@@ -1,3 +1,5 @@
+import { TimeOnly } from './time-only';
+
 type DateOnlyPropertyKeys = 
   | 'toString'
   | 'toISOString'
@@ -148,6 +150,17 @@ export class DateOnly implements Pick<Date, DateOnlyPropertyKeys> {
   setFullYear(year: number): number {
     this.date.setFullYear(year);
     return this.getTime();
+  }
+
+  withTime(time: TimeOnly): Date {
+    const date = this.toDate();
+    date.setUTCHours(
+      time.getUTCHours(),
+      time.getUTCMinutes(),
+      time.getUTCSeconds(),
+      time.getUTCMilliseconds(),
+    );
+    return date;
   }
 
   [Symbol.toPrimitive](hint: 'string' | 'number' | 'default'): string | number {

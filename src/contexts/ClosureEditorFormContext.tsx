@@ -38,6 +38,9 @@ export function ClosureEditorFormContextProvider(
   );
 }
 
+export const ClosureEditorFormContextConsumer =
+  ClosureEditorFormContext.Consumer;
+
 export function useClosureEditorFormContext() {
   const context = useContext(ClosureEditorFormContext);
   if (!context) {
