@@ -23,7 +23,6 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.2",
     "@types/backbone": "^1.4.23",
-    "@types/dateformat": "^5.0.3",
     "@types/geojson": "^7946.0.15",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.2",
@@ -54,7 +53,6 @@
     "@emotion/styled": "^11.14.0",
     "clsx": "^2.1.1",
     "concurrently": "^9.1.2",
-    "dateformat": "^5.0.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "usehooks-ts": "^3.1.1"

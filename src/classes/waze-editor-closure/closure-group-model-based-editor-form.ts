@@ -4,7 +4,7 @@ import { ClosureGroupModel, MajorTrafficEvent as RawMajorTrafficEvent } from 'ty
 import { WazeDirection } from 'enums';
 import { MajorTrafficEvent as SdkMajorTrafficEvent } from 'wme-sdk-typings';
 import { transformMajorTrafficEventToSdk } from 'utils/wme-sdk';
-import dateformat, { masks } from 'dateformat';
+import dateformat, { masks } from 'utils/dateformat';
 
 export class ClosureGroupModelBasedEditorForm implements ClosureEditorForm {
   constructor(
