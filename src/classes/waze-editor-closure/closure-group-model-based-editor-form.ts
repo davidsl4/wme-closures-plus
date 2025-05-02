@@ -1,6 +1,9 @@
 import { findParentFiber, getFiber } from 'utils/react';
 import { ClosureEditorForm } from './closure-editor-form';
-import { ClosureGroupModel, MajorTrafficEvent as RawMajorTrafficEvent } from 'types/waze';
+import {
+  ClosureGroupModel,
+  MajorTrafficEvent as RawMajorTrafficEvent,
+} from 'types/waze';
 import { WazeDirection } from 'enums';
 import { MajorTrafficEvent as SdkMajorTrafficEvent } from 'wme-sdk-typings';
 import { transformMajorTrafficEventToSdk } from 'utils/wme-sdk';
@@ -14,16 +17,18 @@ export class ClosureGroupModelBasedEditorForm implements ClosureEditorForm {
   ) {}
 
   static fromHTMLForm(form: HTMLFormElement): ClosureGroupModelBasedEditorForm {
-    const providers = new Map(Array.from(
-      form.querySelectorAll(
-        '.form-group.closure-nodes + .form-group > .controls > wz-select > wz-option',
+    const providers = new Map(
+      Array.from(
+        form.querySelectorAll(
+          '.form-group.closure-nodes + .form-group > .controls > wz-select > wz-option',
+        ),
+        (optionNode: HTMLOptionElement) => {
+          const partnerName = optionNode.innerText;
+          const partnerId = parseInt(optionNode.getAttribute('value'));
+          return [partnerId, partnerName] as const;
+        },
       ),
-      (optionNode: HTMLOptionElement) => {
-        const partnerName = optionNode.innerText;
-        const partnerId = parseInt(optionNode.getAttribute('value'));
-        return [partnerId, partnerName] as const;
-      },
-    ));
+    );
 
     const editClosureFormFiber = findParentFiber(
       getFiber(form),
@@ -33,7 +38,9 @@ export class ClosureGroupModelBasedEditorForm implements ClosureEditorForm {
     return new ClosureGroupModelBasedEditorForm(
       editClosureFormFiber.props.model,
       providers,
-      new Set(editClosureFormFiber.props.availableEvents as RawMajorTrafficEvent[]),
+      new Set(
+        editClosureFormFiber.props.availableEvents as RawMajorTrafficEvent[],
+      ),
     );
   }
 
@@ -77,7 +84,10 @@ export class ClosureGroupModelBasedEditorForm implements ClosureEditorForm {
     this.closureGroupModel.set('eventId', eventId);
   }
   getAvailableEvents(): SdkMajorTrafficEvent[] {
-    return Array.from(this.availableEvents.values(), transformMajorTrafficEventToSdk);
+    return Array.from(
+      this.availableEvents.values(),
+      transformMajorTrafficEventToSdk,
+    );
   }
 
   getIsPermanent(): boolean {

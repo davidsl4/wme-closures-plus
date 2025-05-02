@@ -9,7 +9,9 @@ const FIBER_KEY_PREFIX = '__reactFiber$';
  * @throws An error if a Fiber node cannot be found for this element
  */
 export function getFiber(element: HTMLElement) {
-  const fiberKey = Object.keys(element).find((key) => key.startsWith(FIBER_KEY_PREFIX));
+  const fiberKey = Object.keys(element).find((key) =>
+    key.startsWith(FIBER_KEY_PREFIX),
+  );
   if (!fiberKey) {
     throw new Error(`No fiber key found for element: ${element}`);
   }

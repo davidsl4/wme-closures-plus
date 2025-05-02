@@ -10,4 +10,4 @@ export type User = Model<{
   getRank(): UserRank;
   isStaffUser(): boolean;
   toJSON(): object;
-}
+};

@@ -31,5 +31,5 @@ export interface ClosurePreset extends ClosurePresetMetadata {
       minutes: number;
     };
     end: ClosureFixedEnd | ClosureDurationalEnd;
-  }
+  };
 }

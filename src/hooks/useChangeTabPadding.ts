@@ -6,7 +6,10 @@ interface PaddingComponentStructuredValue {
   value: number;
   unit: CSSUnit;
 }
-type PaddingComponentValue = number | `${number}${CSSUnit}` | PaddingComponentStructuredValue;
+type PaddingComponentValue =
+  | number
+  | `${number}${CSSUnit}`
+  | PaddingComponentStructuredValue;
 
 export function useChangeTabPadding(
   tabElement: HTMLElement,
@@ -14,17 +17,23 @@ export function useChangeTabPadding(
 ): PaddingComponentStructuredValue[] | null {
   const tabContainer = useTabShadowELement(tabElement);
 
-  const originalPadding = tabContainer ? getComputedStyle(tabContainer).padding : null;
-  const paddingValues = originalPadding ? parsePaddingValue(originalPadding) : null;
+  const originalPadding =
+    tabContainer ? getComputedStyle(tabContainer).padding : null;
+  const paddingValues =
+    originalPadding ? parsePaddingValue(originalPadding) : null;
 
   useLayoutEffect(() => {
     const newPaddingValues = (() => {
       if (typeof newPadding === 'string') return parsePaddingValue(newPadding);
-      if (typeof newPadding === 'number') return [{ value: newPadding, unit: 'px' }];
+      if (typeof newPadding === 'number')
+        return [{ value: newPadding, unit: 'px' }];
 
       return newPadding.map((paddingValue) => {
         if (typeof paddingValue === 'number') {
-          return { value: paddingValue, unit: 'px' } as PaddingComponentStructuredValue;
+          return {
+            value: paddingValue,
+            unit: 'px',
+          } as PaddingComponentStructuredValue;
         }
         if (typeof paddingValue === 'string') {
           return parsePaddingValue(paddingValue)[0];
@@ -34,7 +43,8 @@ export function useChangeTabPadding(
     })();
 
     // Apply the new padding values
-    if (tabContainer) tabContainer.style.padding = `${newPaddingValues.map((val) => `${val.value}${val.unit}`).join(' ')}`;
+    if (tabContainer)
+      tabContainer.style.padding = `${newPaddingValues.map((val) => `${val.value}${val.unit}`).join(' ')}`;
 
     return () => {
       // Reset to original padding on cleanup

@@ -1,6 +1,6 @@
 import { TimeOnly } from './time-only';
 
-type DateOnlyPropertyKeys = 
+type DateOnlyPropertyKeys =
   | 'toString'
   | 'toISOString'
   | 'toJSON'
@@ -18,7 +18,6 @@ type DateOnlyPropertyKeys =
   | 'setDate'
   | 'setMonth'
   | 'setFullYear';
-
 
 export class DateOnly implements Pick<Date, DateOnlyPropertyKeys> {
   private date: Date;
@@ -54,9 +53,16 @@ export class DateOnly implements Pick<Date, DateOnlyPropertyKeys> {
    */
   constructor(year: number, monthIndex: number, date: number);
 
-  constructor(valueOrYear?: Date | number | string, monthIndex?: number, date?: number) {
+  constructor(
+    valueOrYear?: Date | number | string,
+    monthIndex?: number,
+    date?: number,
+  ) {
     if (arguments.length === 0) this.date = new Date();
-    else if (arguments.length === 3) this.date = new Date(Date.UTC(valueOrYear as number, monthIndex as number, date as number));
+    else if (arguments.length === 3)
+      this.date = new Date(
+        Date.UTC(valueOrYear as number, monthIndex as number, date as number),
+      );
     else this.date = new Date(valueOrYear);
 
     this.date.setUTCHours(0, 0, 0, 0); // Set time to midnight UTC
@@ -93,7 +99,7 @@ export class DateOnly implements Pick<Date, DateOnlyPropertyKeys> {
   getUTCDate(): number {
     return this.date.getUTCDate();
   }
- 
+
   getUTCMonth(): number {
     return this.date.getUTCMonth();
   }

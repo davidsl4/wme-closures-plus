@@ -52,6 +52,9 @@ describe('compareDates', () => {
   it('should throw an error for an invalid resolution', () => {
     const date1 = new Date('2023-01-01T12:30:15');
     const date2 = new Date('2023-01-01T12:30:15');
-    expect(() => compareDates(date1, date2, { resolution: 'invalid' as any })).toThrow('Invalid resolution: invalid');
+    expect(() =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      compareDates(date1, date2, { resolution: 'invalid' as any }),
+    ).toThrow('Invalid resolution: invalid');
   });
 });

@@ -21,7 +21,9 @@ interface UseStateHookValue<V> extends BaseHookValue {
  * @param hookValue The hook value to check.
  * @returns True if the hook value is a useState hook value, false otherwise.
  */
-export function isUseState<V>(hookValue: Fiber['memoizedState']): hookValue is UseStateHookValue<V> {
+export function isUseState<V>(
+  hookValue: Fiber['memoizedState'],
+): hookValue is UseStateHookValue<V> {
   // A useState hook value will have a memoizedState property (the type varies depending on the actual state)
   // and a queue property which is an object with a dispatch property, which is a function.
 

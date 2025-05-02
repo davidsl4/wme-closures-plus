@@ -4,7 +4,7 @@ import { WazeDirection } from 'enums';
 
 export type ClosureGroupModel = Model<{
   attribution: ClosureAttribution[];
-  closures: Model[];  
+  closures: Model[];
   closureType: 'roadClosure' | 'turnClosure';
   createdBy: number | null;
   direction: WazeDirection;

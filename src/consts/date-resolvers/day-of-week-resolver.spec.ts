@@ -1,4 +1,4 @@
-import {expect} from '@jest/globals';
+import { expect } from '@jest/globals';
 import '../../../tests/__extenders__/toBeDateEqual';
 import { DAY_OF_WEEK_RESOLVER } from './day-of-week-resolver';
 import { Weekday } from '../../enums';
@@ -22,7 +22,7 @@ describe('DAY_OF_WEEK_RESOLVER', () => {
     expect(result).toBeDateEqual(new Date('2025-04-22T05:00:00Z')); // Next Tuesday from the fixed date without time comparison
   });
 
-  it('should return next week today\'s if the specified day of the week is today', () => {
+  it("should return next week today's if the specified day of the week is today", () => {
     const result = DAY_OF_WEEK_RESOLVER.resolve({
       dayOfWeek: Weekday.Thursday,
     });
@@ -32,12 +32,12 @@ describe('DAY_OF_WEEK_RESOLVER', () => {
   });
 
   it('should throw an error if the arguments are invalid', () => {
-    expect(() => DAY_OF_WEEK_RESOLVER.resolve({ dayOfWeek: -1 as Weekday })).toThrow(
-      'Invalid arguments for DAY_OF_WEEK_RESOLVER: dayOfWeek=-1'
-    );
+    expect(() =>
+      DAY_OF_WEEK_RESOLVER.resolve({ dayOfWeek: -1 as Weekday }),
+    ).toThrow('Invalid arguments for DAY_OF_WEEK_RESOLVER: dayOfWeek=-1');
 
-    expect(() => DAY_OF_WEEK_RESOLVER.resolve({ dayOfWeek: null as unknown as Weekday })).toThrow(
-      'Invalid arguments for DAY_OF_WEEK_RESOLVER: dayOfWeek=null'
-    );
+    expect(() =>
+      DAY_OF_WEEK_RESOLVER.resolve({ dayOfWeek: null as unknown as Weekday }),
+    ).toThrow('Invalid arguments for DAY_OF_WEEK_RESOLVER: dayOfWeek=null');
   });
 });

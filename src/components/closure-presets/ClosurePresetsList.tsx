@@ -3,7 +3,7 @@ import { PresetsListMessage } from './PresetsListMessage';
 import { PresetListCard } from './PresetListCard';
 
 interface ClosurePresetsListProps {
-  presets: ReadonlyArray<Readonly<ClosurePreset>>
+  presets: ReadonlyArray<Readonly<ClosurePreset>>;
 }
 export function ClosurePresetsList({ presets }: ClosurePresetsListProps) {
   if (!presets.length) {
@@ -15,5 +15,7 @@ export function ClosurePresetsList({ presets }: ClosurePresetsListProps) {
     );
   }
 
-  return presets.map((preset) => <PresetListCard key={preset.id} preset={preset} />);
+  return presets.map((preset) => (
+    <PresetListCard key={preset.id} preset={preset} />
+  ));
 }

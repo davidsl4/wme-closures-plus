@@ -21,13 +21,15 @@ export interface UseRefHook<T = unknown> {
 
 export type AnyHook = UseStateHook | UseMemoHook | UseRefHook;
 
-function parseMemoizedStateValue(value: Fiber['memoizedState']): AnyHook | null {
+function parseMemoizedStateValue(
+  value: Fiber['memoizedState'],
+): AnyHook | null {
   if (isUseState(value)) {
     return {
       type: 'useState',
       value: value.memoizedState,
       dispatch: value.queue.dispatch,
-    }
+    };
   }
 
   if (isUseMemo(value)) {
@@ -35,23 +37,32 @@ function parseMemoizedStateValue(value: Fiber['memoizedState']): AnyHook | null 
       type: 'useMemo',
       value: value.memoizedState[0],
       dependencies: value.memoizedState[1],
-    }
+    };
   }
 
   if (isUseRef(value)) {
     return {
       type: 'useRef',
       current: value.memoizedState,
-    }
+    };
   }
 
   return null;
 }
 
 export function parseFiberHooks(fiber: Fiber): Array<AnyHook>;
-export function parseFiberHooks<T extends AnyHook['type']>(fiber: Fiber, type: T): Array<Extract<AnyHook, { type: T }>>;
-export function parseFiberHooks<T extends AnyHook['type']>(fiber: Fiber, type: T[]): Array<Extract<AnyHook, { type: T }>>;
-export function parseFiberHooks(fiber: Fiber, types?: string | string[]): Array<AnyHook> {
+export function parseFiberHooks<T extends AnyHook['type']>(
+  fiber: Fiber,
+  type: T,
+): Array<Extract<AnyHook, { type: T }>>;
+export function parseFiberHooks<T extends AnyHook['type']>(
+  fiber: Fiber,
+  type: T[],
+): Array<Extract<AnyHook, { type: T }>>;
+export function parseFiberHooks(
+  fiber: Fiber,
+  types?: string | string[],
+): Array<AnyHook> {
   const hooks: Array<AnyHook> = [];
 
   let currentHook: Fiber['memoizedState'] | null = fiber.memoizedState;

@@ -18,5 +18,5 @@ interface UnknownClosureAttribution {
   userChannel: string;
 }
 
-export type ClosureAttribution = ClosureAttributionBase & (ClosureCommunityEditorAttribution | UnknownClosureAttribution);
-
+export type ClosureAttribution = ClosureAttributionBase &
+  (ClosureCommunityEditorAttribution | UnknownClosureAttribution);

@@ -12,7 +12,9 @@ interface UseRefHookValue<T> extends BaseHookValue {
  * @param hookValue The hook value to check.
  * @returns True if the hook value is a useRef hook value, false otherwise.
  */
-export function isUseRef<T>(hookValue: unknown): hookValue is UseRefHookValue<T> {
+export function isUseRef<T>(
+  hookValue: unknown,
+): hookValue is UseRefHookValue<T> {
   // A useRef hook value will have a memoizedState property which is an object with a current property.
   // The queue property will be null.
 

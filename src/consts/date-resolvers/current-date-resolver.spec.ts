@@ -1,4 +1,4 @@
-import {expect} from '@jest/globals';
+import { expect } from '@jest/globals';
 import '../../../tests/__extenders__/toBeDateEqual';
 import { CURRENT_DATE_RESOLVER } from './current-date-resolver';
 
@@ -28,5 +28,5 @@ describe('CurrentDateResolver', () => {
     expectWithDate(new Date('2021-10-06T23:59:59Z'));
     expectWithDate(new Date('2028-04-07T00:00:00Z'));
     expectWithDate(new Date('2029-05-08T12:34:56Z'));
-  })
+  });
 });

@@ -2,9 +2,11 @@ interface DateComparisonOptions {
   resolution?: 'day' | 'hour' | 'minute' | 'second';
 }
 
-export function compareDates(date1: Date, date2: Date, {
-  resolution = 'day',
-}: DateComparisonOptions = {}): boolean {
+export function compareDates(
+  date1: Date,
+  date2: Date,
+  { resolution = 'day' }: DateComparisonOptions = {},
+): boolean {
   const date1Copy = new Date(date1);
   const date2Copy = new Date(date2);
 

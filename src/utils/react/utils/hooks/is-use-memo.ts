@@ -11,7 +11,9 @@ interface UseMemoHookValue<V> extends BaseHookValue {
  * @param hookValue The hook value to check.
  * @returns True if the hook value is a useMemo hook value, false otherwise.
  */
-export function isUseMemo<V>(hookValue: unknown): hookValue is UseMemoHookValue<V> {
+export function isUseMemo<V>(
+  hookValue: unknown,
+): hookValue is UseMemoHookValue<V> {
   // A useMemo hook value will have a memoizedState property which is a tuple containing two elements:
   // 1. The memoized value.
   // 2. The dependency list (an array).

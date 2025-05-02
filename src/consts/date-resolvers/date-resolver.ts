@@ -1,10 +1,12 @@
 import { DateOnly } from 'classes';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface DateResolverProperties<N extends string = string, A = any> {
   name: N;
   args: A;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface DateResolver<N extends string = string, A = any> {
   name: N;
   resolve(args: A): DateOnly;

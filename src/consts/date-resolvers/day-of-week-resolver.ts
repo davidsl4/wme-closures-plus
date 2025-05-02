@@ -16,7 +16,7 @@ function validateArguments(args: DayOfWeekResolverArgs): boolean {
 
 /**
  * Resolves a specific day of the week relative to the current date.
- * 
+ *
  * Usage:
  * Pass an object with a `dayOfWeek` property (of type `Weekday`) to determine
  * the next occurrence of that day of the week.
@@ -26,7 +26,9 @@ export const DAY_OF_WEEK_RESOLVER = createDateResolver(
   'SPECIFIC_DAY_OF_WEEK',
   (args: DayOfWeekResolverArgs) => {
     if (!validateArguments(args)) {
-      throw new Error(`Invalid arguments for DAY_OF_WEEK_RESOLVER: dayOfWeek=${args.dayOfWeek}`);
+      throw new Error(
+        `Invalid arguments for DAY_OF_WEEK_RESOLVER: dayOfWeek=${args.dayOfWeek}`,
+      );
     }
 
     const { dayOfWeek } = args;
