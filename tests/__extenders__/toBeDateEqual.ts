@@ -51,7 +51,6 @@ const toBeDateEqual: MatcherFunction<
   [expected: Date, options: CompareDatesOptions]
 > = function (actual, expected, options) {
   if (!isDate(actual) || !isDate(expected)) {
-    console.log(actual instanceof Date, expected instanceof Date);
     throw new TypeError('Both actual and expected values must be Date objects');
   }
 
