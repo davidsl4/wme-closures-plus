@@ -1,6 +1,6 @@
 import { DependencyList } from 'react';
 import { Fiber } from 'react-reconciler';
-import { isUseMemo, isUseRef, isUseState } from '../utils/hooks/index.js';
+import { isUseMemo, isUseRef, isUseState } from '../utils/hooks';
 
 export interface UseStateHook<V = unknown> {
   type: 'useState';

@@ -1,6 +1,6 @@
 import { Fiber } from 'react-reconciler';
-import { getFiberProps } from './get-fiber-props.js';
-import { AnyHook, parseFiberHooks, UseMemoHook, UseRefHook, UseStateHook } from './parse-fiber-hooks.js';
+import { getFiberProps } from './get-fiber-props';
+import { AnyHook, parseFiberHooks, UseMemoHook, UseRefHook, UseStateHook } from './parse-fiber-hooks';
 
 interface ParsedFiber<P extends object = Record<string, any>> {
   fiber: Fiber;
