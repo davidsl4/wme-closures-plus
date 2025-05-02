@@ -15,7 +15,7 @@ describe('CurrentDateResolver', () => {
     function expectWithDate(date: Date) {
       // mock the Date constructor to return a specific date
       const mock = jest.spyOn(global, 'Date').mockImplementation(() => date);
-      expect(CURRENT_DATE_RESOLVER.resolve({})).toBeDateEqual(date);
+      expect(CURRENT_DATE_RESOLVER.resolve({}).toDate()).toBeDateEqual(date);
       mock.mockRestore();
     }
 
