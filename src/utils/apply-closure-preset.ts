@@ -1,5 +1,5 @@
 import { ClosureEditorForm, DateOnly } from 'classes';
-import { TimeOnly } from 'classes/time-only';
+import { TimeOnly } from 'classes';
 import { getDateResolverByName } from 'consts/date-resolvers';
 import { ClosurePreset } from 'interfaces/closure-preset';
 
