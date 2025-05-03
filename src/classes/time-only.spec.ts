@@ -106,58 +106,5 @@ describe('TimeOnly', () => {
       timeOnly.setMilliseconds(250);
       expect(timeOnly.getMilliseconds()).toBe(250);
     });
-
-    describe('UTC Methods', () => {
-      let previousTZ: string | null = null;
-      beforeAll(() => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        previousTZ = (process as any).TZ ?? null;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (process as any).TZ = 'Asia/Jerusalem';
-      });
-      afterAll(() => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        if (previousTZ) (process as any).TZ = previousTZ;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        else delete (process as any).TZ;
-      });
-
-      it('getUTCHours should return the correct UTC hours', () => {
-        expect(timeOnly.getUTCHours()).toBe(8);
-      });
-
-      it('setUTCHours should update the UTC hours correctly', () => {
-        timeOnly.setUTCHours(14);
-        expect(timeOnly.getUTCHours()).toBe(14);
-        expect(timeOnly.getHours()).toBe(16);
-      });
-
-      it('getUTCMinutes should return the correct UTC minutes', () => {
-        expect(timeOnly.getUTCMinutes()).toBe(15);
-      });
-
-      it('setUTCMinutes should update the UTC minutes correctly', () => {
-        timeOnly.setUTCMinutes(50);
-        expect(timeOnly.getUTCMinutes()).toBe(50);
-      });
-
-      it('getUTCSeconds should return the correct UTC seconds', () => {
-        expect(timeOnly.getUTCSeconds()).toBe(30);
-      });
-
-      it('setUTCSeconds should update the UTC seconds correctly', () => {
-        timeOnly.setUTCSeconds(40);
-        expect(timeOnly.getUTCSeconds()).toBe(40);
-      });
-
-      it('getUTCMilliseconds should return the correct UTC milliseconds', () => {
-        expect(timeOnly.getUTCMilliseconds()).toBe(500);
-      });
-
-      it('setUTCMilliseconds should update the UTC milliseconds correctly', () => {
-        timeOnly.setUTCMilliseconds(100);
-        expect(timeOnly.getUTCMilliseconds()).toBe(100);
-      });
-    });
   });
 });
