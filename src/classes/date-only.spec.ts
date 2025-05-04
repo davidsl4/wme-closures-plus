@@ -1,4 +1,5 @@
 import { DateOnly } from './date-only';
+import { TimeOnly } from './time-only';
 
 const FIXED_DATE = new Date('2023-01-01T18:41:00Z');
 
@@ -123,5 +124,46 @@ describe('DateOnly', () => {
     expect(date1.getTime()).toBe(date2.getTime());
     expect(date1.getTime()).not.toBe(date3.getTime());
     expect(date1.getTime()).toBe(date4.getTime());
+  });
+
+  describe('DateOnly.withTime', () => {
+    it('should return a new Date object with the correct time set', () => {
+      const dateOnly = new DateOnly('2023-01-01');
+      const timeOnly = new TimeOnly(12, 30, 45, 500); // 12:30:45.500
+
+      const result = dateOnly.withTime(timeOnly);
+
+      expect(result.getFullYear()).toBe(2023);
+      expect(result.getMonth()).toBe(0); // January
+      expect(result.getDate()).toBe(1);
+      expect(result.getHours()).toBe(12);
+      expect(result.getMinutes()).toBe(30);
+      expect(result.getSeconds()).toBe(45);
+      expect(result.getMilliseconds()).toBe(500);
+    });
+
+    it('should handle midnight time correctly', () => {
+      const dateOnly = new DateOnly('2023-01-01');
+      const timeOnly = new TimeOnly(0, 0, 0, 0); // Midnight
+
+      const result = dateOnly.withTime(timeOnly);
+
+      expect(result.getHours()).toBe(0);
+      expect(result.getMinutes()).toBe(0);
+      expect(result.getSeconds()).toBe(0);
+      expect(result.getMilliseconds()).toBe(0);
+    });
+
+    it('should handle edge case times correctly', () => {
+      const dateOnly = new DateOnly('2023-01-01');
+      const timeOnly = new TimeOnly(23, 59, 59, 999); // 23:59:59.999
+
+      const result = dateOnly.withTime(timeOnly);
+
+      expect(result.getHours()).toBe(23);
+      expect(result.getMinutes()).toBe(59);
+      expect(result.getSeconds()).toBe(59);
+      expect(result.getMilliseconds()).toBe(999);
+    });
   });
 });

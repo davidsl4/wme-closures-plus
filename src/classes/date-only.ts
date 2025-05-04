@@ -160,11 +160,11 @@ export class DateOnly implements Pick<Date, DateOnlyPropertyKeys> {
 
   withTime(time: TimeOnly): Date {
     const date = this.toDate();
-    date.setUTCHours(
-      time.getUTCHours(),
-      time.getUTCMinutes(),
-      time.getUTCSeconds(),
-      time.getUTCMilliseconds(),
+    date.setHours(
+      time.getHours(),
+      time.getMinutes(),
+      time.getSeconds(),
+      time.getMilliseconds(),
     );
     return date;
   }
