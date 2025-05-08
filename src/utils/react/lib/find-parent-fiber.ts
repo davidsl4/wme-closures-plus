@@ -37,7 +37,7 @@ export function findParentFiber<P extends object = Record<string, any>>(
   startingFiber: Fiber,
   predicate: (fiber: ParsedFiber) => boolean,
   maxDepth = Infinity,
-): ParsedFiber<P> {
+): ParsedFiber<P> | null {
   let currentFiber: Fiber | null = startingFiber;
   let depth = 0;
 
