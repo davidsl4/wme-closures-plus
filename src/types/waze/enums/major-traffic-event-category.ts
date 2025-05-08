@@ -1,4 +1,4 @@
-export const enum MajorTrafficEventCategory {
+export enum MajorTrafficEventCategory {
   Concert = 'CONCERT',
   Construction = 'CONSTRUCTION',
   Crisis = 'CRISIS',
