@@ -14,6 +14,8 @@ type ModifiableDataModel = Model<{
 }>;
 
 function getUser(userId: number): User {
+  if (!userId) return null;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const userRepository = getWindow<any>().W.model.users;
   const user = userRepository.getObjectById(userId);
