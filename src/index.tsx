@@ -4,6 +4,8 @@ import { App } from './App';
 import { asScriptTab } from 'utils/as-script-tab';
 import { createElement } from 'react';
 
+import './utils/wme-date-format';
+
 await SDK_INITIALIZED;
 const wmeSdk = await initWmeSdkPlus(
   getWmeSdk({

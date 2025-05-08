@@ -1,4 +1,6 @@
+import { ClosurePresetsManager } from 'components/closure-presets';
 import { ClosureEditorPanel } from 'components/portals';
+import { ClosurePresetsListProvider } from 'contexts';
 import { WmeSdkProvider } from 'contexts/WmeSdkContext';
 import { WmeSDK } from 'wme-sdk-typings';
 
@@ -8,7 +10,11 @@ interface AppProps {
 export function App(props: AppProps) {
   return (
     <WmeSdkProvider wmeSdk={props.wmeSdk}>
-      <ClosureEditorPanel />
+      <ClosurePresetsListProvider>
+        <ClosureEditorPanel />
+
+        <ClosurePresetsManager />
+      </ClosurePresetsListProvider>
     </WmeSdkProvider>
   );
 }
