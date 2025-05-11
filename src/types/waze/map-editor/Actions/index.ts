@@ -1,3 +1,3 @@
-export * from './Action';
-export * from './MultiAction';
-export * from './MultiAddRoadClosure';
+export type * from './Action';
+export type * from './MultiAction';
+export type * from './MultiAddRoadClosure';
