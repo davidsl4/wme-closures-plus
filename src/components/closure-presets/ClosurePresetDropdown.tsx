@@ -62,7 +62,7 @@ function useOptionsMap(options?: ReadonlyArray<Readonly<ClosurePreset>>) {
   const optionsMap: ReadonlyMap<ClosurePreset['id'], ClosurePreset> =
     useMemo(() => {
       const map = new Map<ClosurePreset['id'], ClosurePreset>();
-      options.forEach((option) => {
+      options?.forEach((option) => {
         map.set(option.id, option);
       });
       return map;
