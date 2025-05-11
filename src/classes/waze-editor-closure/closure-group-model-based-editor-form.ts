@@ -104,6 +104,9 @@ export class ClosureGroupModelBasedEditorForm implements ClosureEditorForm {
     return this.closureGroupModel.get('provider');
   }
   setProvider(provider: string | null): void {
+    if (!this.canEditProvider())
+      throw new Error('Provider cannot be changed on this closure');
+
     this.closureGroupModel.set('provider', provider);
   }
   getAvailableProviders(): string[] {
