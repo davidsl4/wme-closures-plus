@@ -97,7 +97,21 @@ export interface ClosurePresetsListContext {
    */
   deletePreset(presetId: string): Promise<void>;
 }
-const ClosurePresetsListContext = createContext<ClosurePresetsListContext>(null!);
+const ClosurePresetsListContext = createContext<ClosurePresetsListContext>({
+  presets: [],
+  isLoading: false,
+  error: new Error('ClosurePresetsListContext is not initialized'),
+  isReadOnly: true,
+  createPreset() {
+    throw new Error('ClosurePresetsListContext is not initialized');
+  },
+  updatePreset() {
+    throw new Error('ClosurePresetsListContext is not initialized');
+  },
+  deletePreset() {
+    throw new Error('ClosurePresetsListContext is not initialized');
+  },
+});
 
 interface ClosurePresetsListProviderProps {
   children: ReactNode;
