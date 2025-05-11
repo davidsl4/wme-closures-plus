@@ -62,6 +62,10 @@ function getEndDateForPreset(
       }
       return endDate;
     }
+    default:
+      throw new Error(
+        `Unsupported end type: ${(endDetails as { type: string }).type}`,
+      );
   }
 }
 
