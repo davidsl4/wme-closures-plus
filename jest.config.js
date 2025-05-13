@@ -7,4 +7,5 @@ export default {
   modulePaths: [
     "<rootDir>/src/"
   ],
+  coveragePathIgnorePatterns: ['<rootDir>/tests/__extenders__'],
 };
