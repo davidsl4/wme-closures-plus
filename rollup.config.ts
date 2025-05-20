@@ -69,6 +69,7 @@ export default {
     resolve(),
     replace({
       preventAssignment: true,
+      delimiters: ['\\b', '\\b'],
       'process.env.NODE_ENV': JSON.stringify('production'),
       __SCRIPT_ID__: JSON.stringify(`${packageAuthor}/${packagePureName}`),
       __SCRIPT_AUTHOR__: JSON.stringify(packageAuthor),
