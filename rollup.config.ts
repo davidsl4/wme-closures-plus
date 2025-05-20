@@ -5,6 +5,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
 import replace from '@rollup/plugin-replace';
 import addBanner from './rollup-plugin-add-banner';
+import svgr from '@svgr/rollup';
 
 import packageMetadata from './package.json';
 
@@ -60,6 +61,7 @@ export default {
     },
   ],
   plugins: [
+    svgr(),
     typescript({
       exclude: ['**/*.spec.ts', '**/*.spec.tsx'],
     }),
